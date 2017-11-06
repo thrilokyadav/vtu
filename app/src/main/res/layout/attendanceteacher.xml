@@ -17,7 +17,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add"
+        android:text=" Add absentees "
         android:id="@+id/button4"
         android:background="@drawable/roundbutton"
         android:onClick="addattendence"
@@ -30,10 +30,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View"
+        android:text=" Generate Code "
         android:id="@+id/button5"
         android:background="@drawable/roundbutton"
-        android:onClick="viewattendence"
+        android:onClick="generatecode"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -49,8 +49,7 @@
         android:textStyle="bold"
         android:textColor="#ffffff"
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/spinner"
-        android:layout_alignStart="@+id/spinner"
+        android:layout_centerHorizontal="true"
         android:paddingTop="30dp"/>
 
 

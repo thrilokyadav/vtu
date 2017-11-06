@@ -59,7 +59,6 @@ public class attendanceteacher extends AppCompatActivity implements OnItemSelect
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         item = parent.getItemAtPosition(position).toString();
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
 
     }
 
@@ -81,7 +80,19 @@ public class attendanceteacher extends AppCompatActivity implements OnItemSelect
             startActivity(intent);
         }
     }
-    public void viewattendence(View view){
-        Toast.makeText(this, "View attendence", Toast.LENGTH_SHORT).show();
+    public void generatecode(View view){
+
+        if(item == "Select Sem")
+        {
+            Toast.makeText(this,"Please Select a sem",Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Intent intent = new Intent(attendanceteacher.this, gencode.class);
+            intent.putExtra("sem", item);
+            intent.putExtra("tid", tid);
+            startActivity(intent);
+        }
+
     }
 }
