@@ -1,17 +1,24 @@
 package blueclimb.com.vtudemo;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -139,4 +146,112 @@ public class Attendance extends AppCompatActivity {
         getddataAsync g = new getddataAsync();
         g.execute();
     }
+
+    public void codesub(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Attendance.this);
+        builder.setTitle("Enter Code given by Teacher");
+        final EditText input = new EditText(Attendance.this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6),new InputFilter.AllCaps()});
+        builder.setView(input);
+        builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String val = input.getText().toString();
+                if(val==""||val.isEmpty()||val==null)
+                {
+                    Toast.makeText(Attendance.this,"Please Enter The code",Toast.LENGTH_SHORT).show();
+                }
+                else if(val.length()!=6)
+                {
+                    Toast.makeText(Attendance.this,"Enter Proper Code",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    sendcode(val);
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
+
+    private void sendcode(final String val) {
+        Toast.makeText(this, "Code sending", Toast.LENGTH_SHORT).show();
+        class sendcodeasync extends AsyncTask<Void,Void,String>
+        {
+            private Dialog loadingDialog;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loadingDialog = ProgressDialog.show(Attendance.this, "Please wait", "Updating");
+            }
+
+
+            @Override
+            protected String doInBackground(Void... voids) {
+                InputStream is = null;
+                ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("usn", USN));
+                nameValuePairs.add(new BasicNameValuePair("code", val));
+                String result = null;
+                try {
+                    HttpClient httpClient = new DefaultHttpClient();
+                    String web = getResources().getString(R.string.web);
+                    HttpPost httpPost = new HttpPost(web + "/attendance/");
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                    HttpResponse response = httpClient.execute(httpPost);
+
+                    HttpEntity entity = response.getEntity();
+
+                    is = entity.getContent();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
+                    StringBuilder sb = new StringBuilder();
+
+                    String line = null;
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    is.close();
+                    result = sb.toString();
+                    Log.e("log res", result);
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            @Override
+            protected void onPostExecute(String result){
+                loadingDialog.dismiss();
+                String s="";
+                try {
+                    s = result.trim();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                if(s.equalsIgnoreCase("success"))
+                {
+                    Toast.makeText(Attendance.this,"Code submitted",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(Attendance.this,"Please try again",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+        sendcodeasync s =  new sendcodeasync();
+        s.execute();
+   }
 }

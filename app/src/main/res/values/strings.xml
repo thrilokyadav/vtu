@@ -22,7 +22,7 @@
     <string name="hint_empty">This field cannot be blank</string>
     <string name ="error_email">Please enter a valid email</string>
     <string name="font_family_thin">sans-serif-light</string>
-    <string name="noticee">The code generated is random and will be usable for only 1 minute after submitting.    Please share the code with students to mark attendance.</string>
+    <string name="noticee">The code generated is random and will be usable for only 1 minute after submitting.\n\nPlease share the code with students to mark attendance.</string>
 
     <string-array name="sem_arrays">
         <item>SEM-1</item>

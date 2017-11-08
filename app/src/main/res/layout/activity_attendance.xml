@@ -6,8 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".Attendance"
     android:padding="20dp">
+    <Button
+        android:id="@+id/btn_New"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:onClick="codesub"
+        android:text="submit code"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textstunotice"
+        android:text="Enter the code given from the teacher for attendance.\nThe code is valid for ony 1 minute."
+        android:layout_above="@+id/btn_New"/>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/attendancestudentlist"></ListView>
+        android:id="@+id/attendancestudentlist"
+        android:layout_above="@+id/textstunotice"></ListView>
 </RelativeLayout>
