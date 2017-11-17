@@ -1,7 +1,10 @@
 package blueclimb.com.vtudemo;
 
 import android.animation.ObjectAnimator;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -16,6 +19,22 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -59,9 +78,80 @@ public class gencode extends AppCompatActivity {
     public void markatten(View view) {
         String cde = randnum[randsp.getSelectedItemPosition()];
         Toast.makeText(this,cde,Toast.LENGTH_SHORT).show();
-        final MyCounter timer = new MyCounter(60000,1000,progressBar);
-        timer.start();
+        sendcode(cde);
     }
+
+    private void sendcode(final String val) {
+        class sendtcodeasync extends AsyncTask<Void,Void,String>
+        {
+            private Dialog loadingDialog;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loadingDialog = ProgressDialog.show(gencode.this, "Please wait", "Updating");
+            }
+
+
+            @Override
+            protected String doInBackground(Void... voids) {
+                InputStream is = null;
+                ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("tid", tid));
+                nameValuePairs.add(new BasicNameValuePair("code", val));
+                String result = null;
+                try {
+                    HttpClient httpClient = new DefaultHttpClient();
+                    String web = getResources().getString(R.string.web);
+                    HttpPost httpPost = new HttpPost(web + "/attendance/attendance_t_code.php");
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                    HttpResponse response = httpClient.execute(httpPost);
+
+                    HttpEntity entity = response.getEntity();
+
+                    is = entity.getContent();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
+                    StringBuilder sb = new StringBuilder();
+
+                    String line = null;
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    is.close();
+                    result = sb.toString();
+                    Log.e("log res", result);
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            @Override
+            protected void onPostExecute(String result){
+                loadingDialog.dismiss();
+                String s="";
+                try {
+                    s = result.trim();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                if(s.equalsIgnoreCase("success"))
+                {
+                        final MyCounter timer = new MyCounter(60000, 1000, progressBar);
+                        timer.start();
+                }
+            }
+        }
+        sendtcodeasync s =  new sendtcodeasync();
+        s.execute();
+    }
+
     public class MyCounter extends CountDownTimer {
      ProgressBar pb;
 
