@@ -67,19 +67,6 @@ public class attendanceteacher extends AppCompatActivity implements OnItemSelect
 
     }
 
-    public void addattendence(View view){
-        if(item == "Select Sem")
-        {
-            Toast.makeText(this,"Please Select a sem",Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            Intent intent = new Intent(attendanceteacher.this, attendencesubmit.class);
-            intent.putExtra("sem", item);
-            intent.putExtra("tid", tid);
-            startActivity(intent);
-        }
-    }
     public void generatecode(View view){
 
         if(item == "Select Sem")

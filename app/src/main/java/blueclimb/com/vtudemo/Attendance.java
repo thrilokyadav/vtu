@@ -203,7 +203,7 @@ public class Attendance extends AppCompatActivity {
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
                     String web = getResources().getString(R.string.web);
-                    HttpPost httpPost = new HttpPost(web + "/attendance/");
+                    HttpPost httpPost = new HttpPost(web + "/attendance/attendance_s_save.php");
                     httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                     HttpResponse response = httpClient.execute(httpPost);

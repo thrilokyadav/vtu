@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
                         sb.append(line + "\n");
                     }
                     result = sb.toString();
-                    Log.e("log res", result);
+                    Log.e("log res","1"+ result);
                 } catch (ClientProtocolException e) {
                     e.printStackTrace();
                 } catch (UnsupportedEncodingException e) {
@@ -148,12 +148,17 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
                 }
                 else if(s.length()<5)
                 {
-                    Intent intent = new Intent(LoginActivity.this, MainActivityTeacher.class);
-                    intent.putExtra("tid",s);
-                    finish();
-                    startActivity(intent);
-                    Toast.makeText(getApplicationContext(),"Login success",Toast.LENGTH_SHORT).show();
-
+                    if(s.length()==4 && s.charAt(0)=='T') {
+                        Intent intent = new Intent(LoginActivity.this, MainActivityTeacher.class);
+                        intent.putExtra("tid", s);
+                        finish();
+                        startActivity(intent);
+                        Toast.makeText(getApplicationContext(), "Login success", Toast.LENGTH_SHORT).show();
+                    }
+                    else 
+                    {
+                        Toast.makeText(LoginActivity.this, "Login Failure", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else if(s.length()>10 && s.charAt(10)=='P')
                 {

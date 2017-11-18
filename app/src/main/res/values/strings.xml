@@ -16,7 +16,7 @@
     </string>
     <integer name="swing_anim_time">1000</integer>
     <string name="action_settings">Settings</string>
-    <string name="web">http://blueclimb.co.in/mobile_app/</string>
+    <string name="web">http://marsbuildersanddevelopers.com/mobile_app/</string>
     <string name="hint_email">Enter Your ID</string>
     <string name="hint_password">Enter Password</string>
     <string name="hint_empty">This field cannot be blank</string>
