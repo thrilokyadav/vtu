@@ -45,14 +45,11 @@ public class pieAdapter extends ArrayAdapter<internalpie> {
         TextView in1 = (TextView)Convertedview.findViewById(R.id.inter1);
         TextView in2 = (TextView)Convertedview.findViewById(R.id.inter2);
         TextView in3 = (TextView)Convertedview.findViewById(R.id.inter3);
-        final PieChart pp = (PieChart)Convertedview.findViewById(R.id.interchart);
         TextView avgm = (TextView)Convertedview.findViewById(R.id.avgm);
         b.setText(ip[position].getInternalsubbutton());
         b.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v)
             {
-                pp.notifyDataSetChanged();
-                pp.invalidate();
                 el.toggle();
             }
         });
@@ -62,24 +59,24 @@ public class pieAdapter extends ArrayAdapter<internalpie> {
         avgm.setText(avgm.getText()+ip[position].getAvg());
         Log.e("avg marks",ip[position].getAvg());
         Log.e("rem marks",ip[position].getRemmrks());
-        yvalues.add(new Entry(Integer.parseInt(ip[position].getAvg()),0));
-        yvalues.add(new Entry(Integer.parseInt(ip[position].getRemmrks()),1));
-        xvalues.add(ip[position].getAvg()+" marks");
-        xvalues.add("Out of 25");
-        PieDataSet dataSet = new PieDataSet(yvalues,"Subject Average");
-        PieData data = new PieData(xvalues,dataSet);
-        pp.setData(data);
-        pp.setDescription("");
-        pp.setContentDescription("");
-        pp.setDrawHoleEnabled(true);
-        pp.setCenterText("Average Chart");
-        pp.setHoleRadius(170f);
-        dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
-        data.setValueTextSize(11f);
-        data.setValueTextColor(Color.BLACK);
-        pp.getLegend().setEnabled(false);
-        pp.invalidate();
-        yvalues.clear();
+//        yvalues.add(new Entry(Integer.parseInt(ip[position].getAvg()),0));
+//        yvalues.add(new Entry(Integer.parseInt(ip[position].getRemmrks()),1));
+//        xvalues.add(ip[position].getAvg()+" marks");
+//        xvalues.add("Out of 25");
+//        PieDataSet dataSet = new PieDataSet(yvalues,"Subject Average");
+//        PieData data = new PieData(xvalues,dataSet);
+//        pp.setData(data);
+//        pp.setDescription("");
+//        pp.setContentDescription("");
+//        pp.setDrawHoleEnabled(true);
+//        pp.setCenterText("Average Chart");
+//        pp.setHoleRadius(170f);
+//        dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
+//        data.setValueTextSize(11f);
+//        data.setValueTextColor(Color.BLACK);
+//        pp.getLegend().setEnabled(false);
+//        pp.invalidate();
+//        yvalues.clear();
         el.setExpanded(false);
         return Convertedview;
     }

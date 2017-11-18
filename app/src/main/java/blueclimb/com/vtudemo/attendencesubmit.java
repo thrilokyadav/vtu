@@ -36,6 +36,7 @@ import java.util.ArrayList;
  */
 public class attendencesubmit extends AppCompatActivity {
     private String tid,sem;
+    private ArrayList<String> preusn = new ArrayList<String>();
     private ArrayList<String> usn = new ArrayList<String>();
     private ArrayList<String> absent = new ArrayList<String>();
     ListView lv;
@@ -49,6 +50,7 @@ public class attendencesubmit extends AppCompatActivity {
         Bundle b = iin.getExtras();
         if(b!=null)
         {
+            preusn=(ArrayList<String>) b.get("usn");
             tid =(String) b.get("tid");
             sem =(String) b.get("sem");
         }
@@ -72,10 +74,13 @@ public class attendencesubmit extends AppCompatActivity {
             }
             @Override
             protected String doInBackground(String... params) {
-                String dev_id = params[0];
                 InputStream is = null;
                 ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
                 nameValuePairs.add(new BasicNameValuePair("tid", ttid));
+                for(int i=0;i<usn.size();i++)
+                {
+                    nameValuePairs.add(new BasicNameValuePair("usn[]",usn.get(i)));
+                }
                 Log.e("tid",ttid);
                 String result = null;
 
