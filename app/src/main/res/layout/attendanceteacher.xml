@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:text=" Generate Code "
         android:id="@+id/button5"
-        android:background="@drawable/roundbutton"
+        android:background="@drawable/textcolor"
         android:onClick="generatecode"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

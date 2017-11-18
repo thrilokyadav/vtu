@@ -212,7 +212,7 @@ public class gencode extends AppCompatActivity {
 
                     JSONObject jsonResponse = new JSONObject(result);
 
-                    JSONArray slist = jsonResponse.getJSONArray("attendence");
+                    JSONArray slist = jsonResponse.getJSONArray("compare");
                     for (int j=0; j<slist.length(); j++) {
                         JSONObject sub = slist.getJSONObject(j);
                         Log.e("usn", sub.getString("usns"));

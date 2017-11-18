@@ -60,5 +60,5 @@
         android:onClick="updatemarks"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/roundbutton"/>
+        android:background="@drawable/textcolor"/>
 </RelativeLayout>

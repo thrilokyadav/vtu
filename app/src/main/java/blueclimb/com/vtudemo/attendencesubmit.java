@@ -79,7 +79,7 @@ public class attendencesubmit extends AppCompatActivity {
                 nameValuePairs.add(new BasicNameValuePair("tid", ttid));
                 for(int i=0;i<usn.size();i++)
                 {
-                    nameValuePairs.add(new BasicNameValuePair("usn[]",usn.get(i)));
+                    nameValuePairs.add(new BasicNameValuePair("usn[]",preusn.get(i)));
                 }
                 Log.e("tid",ttid);
                 String result = null;
